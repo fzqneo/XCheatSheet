@@ -4,4 +4,6 @@
 
 [2]:https://software.intel.com/sites/default/files/managed/c0/a8/hotspots_amplxe_lin.pdf
 
-**Reference:** [1] [2]
+**Reference:** 
+[from UCSD][1] 
+[from Intel][2]
