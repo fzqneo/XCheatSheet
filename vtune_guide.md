@@ -6,9 +6,21 @@
 
 **Reference:** 
 
-1. [from UCSD][1] 
-2. [from Intel][2]
++ [from UCSD][1] 
++ [from Intel][2]
 
 ##Install
 
+Download the source from Intel's website, extract and install. Quick steps see [1]
 
+##Launch
+
+Every time before using VTune, execute the following:
+
+```
+source /opt/intel/vtune_amplifier_xe_2013/amplxe-vars.sh
+echo 0 | sudo tee /proc/sys/kernel/nmi_watchdog
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+```
+
+Note: the 1st line sets some environment variables. The 2nd line is necessary for general exploration. The 3nd is necessary for basic hotspot analysis.
