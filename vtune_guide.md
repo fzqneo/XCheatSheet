@@ -34,7 +34,7 @@ amplxe-gui
 
 More details in [intel]. Quick steps:
 
-Profiling a **selected code section**
+Profiling a **selected code section** --- insert in your source:
 
 ```
 #include	<ittnotify.h>
