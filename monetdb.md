@@ -36,3 +36,9 @@ List all DB    | \l          | no way
 Describe table | \d [tpch]   | \d [tpch]
 Execute script | \i file.sql | \\\< file.sql
 Quit           | \q          | \q
+
++ Loading
+```
+COPY INTO customer from '/home/neo/tpch/tpch_2_16_1/dbgen/customer.csv' USING DELIMITERS '|','\n' NULL AS '';
+```
+Notice: file path must be **aboluste path**.
