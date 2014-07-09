@@ -21,7 +21,7 @@ Each monetdb demon is associated with a **dbfarm**. Only one instance of *monetd
 
 + Start: `mclient -u monetdb -d tpch`
 
-**No** support for `use database` command within a client session.
+**No** support for `use database` command **within** a client session.
 
 + Timing: `mclient -ims -u monetdb -d tpch`
 
