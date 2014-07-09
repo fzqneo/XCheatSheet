@@ -36,7 +36,7 @@ More details in [intel]. Quick steps:
 
 Profiling a **selected code section** --- insert in your source:
 
-```
+```cpp
 #include	<ittnotify.h>
 …
 __itt_resume();
