@@ -41,4 +41,4 @@ Quit           | \q          | \q
 ```
 COPY INTO customer from '/home/neo/tpch/tpch_2_16_1/dbgen/customer.csv' USING DELIMITERS '|','\n' NULL AS '';
 ```
-Notice: file path must be **aboluste path**.
+Notice: file path must be **absolute path**.
