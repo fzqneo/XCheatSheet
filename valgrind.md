@@ -2,4 +2,4 @@
 
 ##Callgrind
 
-User Manual [http://valgrind.org/docs/manual/cl-manual.html]
+[User Manual][http://valgrind.org/docs/manual/cl-manual.html]
