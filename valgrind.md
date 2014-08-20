@@ -42,3 +42,9 @@ On the command line, start profiling with
 ```bash
 kcachegrind callgrind.out.4990
 ```
+
+###Invoke debugger when error occurs
+```
+valgrind --db-attach=yes ./myapp
+```
+This will launch **gdb** when valgrind encounters an error.
