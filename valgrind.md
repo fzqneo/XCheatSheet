@@ -48,3 +48,18 @@ kcachegrind callgrind.out.4990
 valgrind --db-attach=yes ./myapp
 ```
 This will launch **gdb** when valgrind encounters an error.
+
+##Memcheck
+
+**memcheck** is the default tool used by Valgrind. It is intended to idendify memory related problems, which mainly include:
+
++ Memory leak (e.g., `new` without `free`)
++ Illegal access (e.g., "one past the end" access)
+
+```bash
+valgrind --leak-check=yes  --read-var-info=yes ./myapp
+```
+
+For memory leak, it shows where the leaked memory is allocated. For illegal access, it may report if the accessed address is near some legal address space.
+
+The ` --read-var-info ` option can provide more detailed information about illegal access location.
