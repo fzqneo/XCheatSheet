@@ -41,4 +41,10 @@ Quit           | \q          | \q
 ```
 COPY INTO customer from '/home/neo/tpch/tpch_2_16_1/dbgen/customer.csv' USING DELIMITERS '|','\n' NULL AS '';
 ```
+
++ Export
+```
+COPY (select encode_date(l_shipdate) from "sys"."lineitem") INTO '/tmp/lineitem.l_shipdate.txt' NULL AS '0';
+```
+
 Notice: file path must be **absolute path**.
