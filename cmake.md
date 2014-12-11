@@ -112,3 +112,38 @@ foreach(srcfile ${experiment_src})
     target_link_libraries(${exp} foo ${CMAKE_SOURCE_DIR}/pcm/pcm-lib.a)
 endforeach()
 ```
+
+## Using Google Test
+
+GoogleTest comes along with its own CMake file that builds its own library.
+My approach: simply copy the whole GoogleTest folder into your project directory,
+then make it a sub-directory of your project.
+
+Notice the line `add_subdirectory(gtest-1.7.0)` in the root CMake file above.
+
+`project_root/test/CMakeLists.txt`
+---
+The `test` folder contains a set of test cases that uses the GoogleTest framework.
+
+```cmake
+# Remember to include the GoogleTest's headers
+# the variables like gtest_SOURCE_DIR are defined by gtest's CMake file
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+file(GLOB test_src RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
+# Remember to link the gtest libray.
+# Also gtest_main, if you don't have your own main function. (Yep I'm lazy)
+add_executable(all-test ${test_src})
+target_link_libraries(all-test byteslice-core gtest gtest_main)
+# autoplay: run the all-test executable immediately after it is built.
+# Note: currently CMake's add_custome_command(TARGET ...) function only supports
+# targets defined in the same directory,
+# which I think is a weakness.
+if(autoplay)
+message(STATUS "Autoplay tests after build.")
+add_custom_command(TARGET all-test
+                   POST_BUILD
+                   COMMAND all-test
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                   COMMENT "Running all test case using google-test.")
+endif()
+```
