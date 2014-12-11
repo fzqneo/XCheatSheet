@@ -1,5 +1,13 @@
 # CMake
 
+CMake is a tool to generate build scripts. 
+In a mouthful way: it builds build scripts.
+The original purpose of CMake is to be platform independent.
+For example, the same CMake file can generate scripts for GNU make, clang and MSVC.
+
+There is a growing population of IDEs supporting CMake.
+E.g., KDevelop and CLion.
+
 Basically, there should be a `CMakeLists.txt` file (don't miss the **s** in the file name) 
 in your project's root directory.
 There should also be a `CMakeLists.txt` file in every sub-directory 
