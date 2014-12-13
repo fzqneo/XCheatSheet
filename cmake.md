@@ -105,7 +105,7 @@ add_library(foo STATIC ${foo_src})
 `project_root/experiment/CMakeLists.txt`
 ---
 The `experiment` directory contains a set of experiment programs.
-Each *.cpp file contains a `main` function and each file is compiled into an **executable**.
+Each \*.cpp file contains a `main` function and each file is compiled into an **executable**.
 
 ```cmake
 # My experiments need to use another library called pcm
