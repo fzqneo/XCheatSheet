@@ -38,12 +38,12 @@ Execute script | \i file.sql | \\\< file.sql
 Quit           | \q          | \q
 
 + Loading
-```
+```sql
 COPY INTO customer from '/home/neo/tpch/tpch_2_16_1/dbgen/customer.csv' USING DELIMITERS '|','\n' NULL AS '';
 ```
 
 + Export
-```
+```sql
 COPY (select encode_date(l_shipdate) from "sys"."lineitem") INTO '/tmp/lineitem.l_shipdate.txt' NULL AS '0';
 ```
 
