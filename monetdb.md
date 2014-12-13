@@ -29,7 +29,7 @@ Each monetdb demon is associated with a **dbfarm**. Only one instance of *monetd
 
 + Some commands
 
-Purpose        | Postgres    | MonetDB
+Purpose        | PostgreSql    | MonetDB
 ---------------|-------------|-----------:
 Change DB      | \c tpch     | no way
 List all DB    | \l          | no way
