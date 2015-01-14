@@ -41,6 +41,10 @@ if(NOT CONFIGURED_ONCE)
     set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O1")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D NDEBUG")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -ggdb3 -D NDEBUG")
+    # Set default build type as debug
+    if(NOT CMAKE_BUILD_TYPE)
+        set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type: Debug." FORCE)
+    endif()
 endif()
 
 
