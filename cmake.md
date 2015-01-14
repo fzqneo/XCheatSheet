@@ -35,16 +35,20 @@ if(NOT CONFIGURED_ONCE)
 #   Set warning/architecture/standard or other compiler flags 
 #   shared by all build types (debug/release/relwithdebinfo)
     set(CMAKE_CXX_FLAGS "${warnings} ${archs}"
-            CACHE STRING "Flags used by the compiler during all build types." FORCE)
+        CACHE STRING "Flags used by the compiler during all build types." FORCE)
 #   Set compiler flags for different build types
 #   mainly regarding debug option and optimization levels
-    set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O1")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D NDEBUG")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -ggdb3 -D NDEBUG")
-    # Set default build type as debug
+    set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O1 -D NPREFETCH" 
+        CACHE STRING "Flags used by the complier during debug build type." FORCE)
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D NDEBUG -D NPREFETCH" 
+        CACHE STRING "Flags used by the compiler during release build type." FORCE)
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -ggdb3 -D NDEBUG -D NPREFETCH" 
+        CACHE STRING "Flags used by the compiler during relwithdebinfo." FORCE)
+#   Set default build type as debug
     if(NOT CMAKE_BUILD_TYPE)
         set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type: Debug." FORCE)
     endif()
+#   Note: you must use FORCE when setting built-in variables. Because they exist in cache even before the first configuration.
 endif()
 
 
