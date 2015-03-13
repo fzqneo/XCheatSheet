@@ -96,6 +96,8 @@ make      # build
 cmake -DCMAKE_BUILD_TYPE=debug ..
 cmake -DCMAKE_BUILD_TYPE=relase -Dtest=OFF ..
 VERBOSE=1 make
+# Set compiler version:
+CC=gcc-4.9 CXX=g++-4.9 cmake ..
 ```
 
 `project_root/src/CMakeLists.txt`
