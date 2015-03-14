@@ -135,7 +135,7 @@ endforeach()
 
 GoogleTest comes along with its own CMake file that builds its own library.
 My approach: simply copy the whole GoogleTest folder into your project directory,
-then make it a sub-directory of your project.
+then make it a sub-directory of your project. (A quick intro of GoogleTest: http://www.ibm.com/developerworks/aix/library/au-googletestingframework.html)
 
 Notice the line `add_subdirectory(gtest-1.7.0)` in the root CMake file above.
 
