@@ -1,7 +1,8 @@
 # CMake
 
-CMake is a tool to generate build scripts. 
-In a mouthful way: it builds build scripts.
+CMake is a tool to generate build scripts.
+A *build script* helps you compile and link your project codes automatically.
+CMake helps you generate such build scripts.
 The original purpose of CMake is to be platform independent.
 For example, the same CMake file can generate scripts for GNU make, clang and MSVC.
 
@@ -28,16 +29,16 @@ project ("Project_name")
 ##  Set up compiler
 ############################
 
-set(warnings "-Wall")
-set(archs "-mavx2 -m64 -std=c++11")
+set(warnings "-Wall")   # set warning options
+set(misc "-mavx2 -m64 -std=c++11")  # set other miscellaneous options, e.g., architecture extension, language standard ...
 
 if(NOT CONFIGURED_ONCE)
-#   Set warning/architecture/standard or other compiler flags 
-#   shared by all build types (debug/release/relwithdebinfo)
-    set(CMAKE_CXX_FLAGS "${warnings} ${archs}"
+#   Set compiler flags 
+#   shared by all build types
+    set(CMAKE_CXX_FLAGS "${warnings} ${misc}"
         CACHE STRING "Flags used by the compiler during all build types." FORCE)
-#   Set compiler flags for different build types
-#   mainly regarding debug option and optimization levels
+#   Set compiler flags for different build types (debug/release/relwithdebinfo)
+#   mainly with different debug option and optimization levels
     set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O1 -D NPREFETCH" 
         CACHE STRING "Flags used by the complier during debug build type." FORCE)
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -D NDEBUG -D NPREFETCH" 
@@ -54,7 +55,7 @@ endif()
 
 #############################
 ##  Add source files
-############################
+#############################
 # Add non-system include directories where the compiler will search for headers
 # Variables like CMAKE_CURRENT_SOURCE_DIR are CMake's built-in variables
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}"  "${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -65,8 +66,9 @@ add_subdirectory(src)
 add_subdirectory(experiments)
 
 #############################
-##  Set up test
-############################
+##  Set up test 
+##  (GoogleTest is used here)
+#############################
 option(test "Build all tests." ON)
 option(autoplay "Auto play test immediately after build." ON)
 if(test)
@@ -74,7 +76,8 @@ if(test)
     enable_testing()
     add_subdirectory(gtest-1.7.0)
     add_subdirectory(tests)
-    add_test(NAME all-test COMMAND all-test)
+    # Naive test support is not useful here
+    # add_test(NAME all-test COMMAND all-test)
 endif()
 
 set(CONFIGURED_ONCE TRUE CACHE INTERNAL "A flag showing that CMake has configured at least once.")
