@@ -1,7 +1,8 @@
 # CMake
 
 CMake is a tool to generate build scripts.
-A *build script* helps you compile and link your project codes automatically.
+A *build script* helps you compile and link your project codes automatically 
+(for example, a *Makefile* is a build script).
 CMake helps you generate such build scripts.
 The original purpose of CMake is to be platform independent.
 For example, the same CMake file can generate scripts for GNU make, clang and MSVC.
