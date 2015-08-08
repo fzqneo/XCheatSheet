@@ -66,20 +66,25 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}"  "${CMAKE_CURRENT_SOURCE_DIR}/
 add_subdirectory(src)
 add_subdirectory(experiments)
 
-#############################
+#########################################
 ##  Set up test 
-##  (GoogleTest is used here)
-#############################
-option(test "Build all tests." ON)
-option(autoplay "Auto play test immediately after build." ON)
-if(test)
-    message(STATUS "Tests will be built.")
-    enable_testing()
-    add_subdirectory(gtest-1.7.0)
-    add_subdirectory(tests)
-    # Naive test support is not useful here
-    # add_test(NAME all-test COMMAND all-test)
-endif()
+##  1. GoogleTest library is used here
+##  2. Emulate 'make check' and 'make check-build'
+##  from autotools. 
+##  Reference: http://www.cmake.org/Wiki/CMakeEmulateMakeCheck
+#########################################
+enable_testing()
+SET(testlog "tests/tests.log")  # Also redirect the test output to a log file
+add_custom_target(check-build)  # 'check-build' only builds but not runs the tests.
+add_custom_target(check 
+    # a couple of options can be passed. See http://www.cmake.org/cmake/help/v2.8.8/ctest.html
+    COMMAND ${CMAKE_CTEST_COMMAND}  
+        --verbose --output-on-failure 
+        --output-log ${testlog}
+)
+add_dependencies(check check-build)
+add_subdirectory(gtest-1.7.0 EXCLUDE_FROM_ALL)  # Exclude test targets from ALL
+add_subdirectory(tests EXCLUDE_FROM_ALL)    # Same as above
 
 set(CONFIGURED_ONCE TRUE CACHE INTERNAL "A flag showing that CMake has configured at least once.")
 
@@ -151,21 +156,21 @@ The `test` folder contains a set of test cases that uses the GoogleTest framewor
 # Remember to include the GoogleTest's headers
 # the variables like gtest_SOURCE_DIR are defined by gtest's CMake file
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-file(GLOB test_src RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
-# Remember to link the gtest libray.
-# Also gtest_main, if you don't have your own main function. (Yep I'm lazy)
-add_executable(all-test ${test_src})
-target_link_libraries(all-test byteslice-core gtest gtest_main)
-# autoplay: run the all-test executable immediately after it is built.
-# Note: currently CMake's add_custome_command(TARGET ...) function only supports
-# targets defined in the same directory,
-# which I think is a weakness.
-if(autoplay)
-message(STATUS "Autoplay tests after build.")
-add_custom_command(TARGET all-test
-                   POST_BUILD
-                   COMMAND all-test
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                   COMMENT "Running all test case using google-test.")
-endif()
+
+list(APPEND test_list
+        avx-utility_test
+        bitvector_block_test
+        bitvector_iterator_test
+        bitvector_test
+        byteslice_column_block_test
+        column_test
+    )
+
+# For each test file, add it to an executable and add it to dependencies of 'check-build'
+foreach(tt ${test_list})
+    add_executable(${tt}  "${tt}.cpp")
+    target_link_libraries(${tt} byteslice-core gtest gtest_main)
+    add_test(NAME ${tt} COMMAND ${tt} --gtest_color=yes)
+    add_dependencies(check-build ${tt})
+endforeach()
 ```
