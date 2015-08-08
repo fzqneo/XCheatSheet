@@ -15,3 +15,5 @@ Also, you are welcome to tell me if you :
 + would like to suggest a better approach for some issue.
 
 I will be grateful for such opinions and suggestions.
+
+\- Neo
