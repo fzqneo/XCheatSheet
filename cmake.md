@@ -132,9 +132,9 @@ list(APPEND demo_sources
 add_library(demo STATIC ${demo_sources})
 ```
 
-### `project_root/experiment/CMakeLists.txt`
+### `project_root/experiments/CMakeLists.txt`
 
-The `experiment/` directory contains a set of experiment programs.
+The `experiments/` directory contains a set of experiment programs.
 Each .cpp file contains a `main` function and each file is compiled into an **executable**.
 
 ```cmake
