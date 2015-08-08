@@ -17,16 +17,14 @@ For example, a *Makefile* is a commonly used kind of build script.
 
 ## CMake in a typical project
 
-Basically, there should be a `CMakeLists.txt` file (don't miss the **s** in the file name) 
+Basically, there should be a `CMakeLists.txt` file (don't miss the **s** in the file name, and case-sensitive) 
 in your project's root directory.
 There should also be a `CMakeLists.txt` file in every sub-directory 
 that contains source files to be compiled
-(either into object files or executables).
+(into object files, libraries or executables).
 
-## Root CMake file and sub-directory CMake file
+### `project_root/CMakeLists.txt`
 
-`project_root/CMakeLists.txt`
----
 ```cmake
 # Put this file in the root directory of your project
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
@@ -40,9 +38,13 @@ project ("Project_name")
 set(warnings "-Wall")   # set warning options
 set(misc "-mavx2 -m64 -std=c++11")  # set other miscellaneous options, e.g., architecture extension, language standard ...
 
+# Set default build type as debug
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type: Debug." FORCE)
+endif()
+
 if(NOT CONFIGURED_ONCE)
-#   Set compiler flags 
-#   shared by all build types
+#   Set compiler flags shared by all build types
     set(CMAKE_CXX_FLAGS "${warnings} ${misc}"
         CACHE STRING "Flags used by the compiler during all build types." FORCE)
 #   Set compiler flags for different build types (debug/release/relwithdebinfo)
@@ -53,10 +55,7 @@ if(NOT CONFIGURED_ONCE)
         CACHE STRING "Flags used by the compiler during release build type." FORCE)
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -ggdb3 -D NDEBUG -D NPREFETCH" 
         CACHE STRING "Flags used by the compiler during relwithdebinfo." FORCE)
-#   Set default build type as debug
-    if(NOT CMAKE_BUILD_TYPE)
-        set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type: Debug." FORCE)
-    endif()
+
 #   Note: you must use FORCE when setting built-in variables. Because they exist in cache even before the first configuration.
 endif()
 
@@ -64,9 +63,8 @@ endif()
 #############################
 ##  Add source files
 #############################
-# Add non-system include directories where the compiler will search for headers
-# Variables like CMAKE_CURRENT_SOURCE_DIR are CMake's built-in variables
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}"  "${CMAKE_CURRENT_SOURCE_DIR}/include")
+# Variables like CMAKE_SOURCE_DIR are CMake's built-in variables
+include_directories("${CMAKE_SOURCE_DIR}/src")
 
 # Add sub-directories
 # Each sub-directory should contain a CMakeLists.txt for building targets in that directory
@@ -75,7 +73,7 @@ add_subdirectory(experiments)
 
 #########################################
 ##  Set up test 
-##  1. GoogleTest library is used here
+##  1. GoogleTest library is assumed here
 ##  2. Emulate 'make check' and 'make check-build'
 ##  from autotools. 
 ##  Reference: http://www.cmake.org/Wiki/CMakeEmulateMakeCheck
@@ -88,6 +86,7 @@ add_custom_target(check
     COMMAND ${CMAKE_CTEST_COMMAND}  
         --verbose --output-on-failure 
         --output-log ${testlog}
+    COMMENT "Test log is written to ${testlog}"
 )
 add_dependencies(check check-build)
 add_subdirectory(gtest-1.7.0 EXCLUDE_FROM_ALL)  # Exclude test targets from ALL
@@ -97,28 +96,27 @@ set(CONFIGURED_ONCE TRUE CACHE INTERNAL "A flag showing that CMake has configure
 
 ```
 
-### Generating build script
+### Generating build script and building
 
-Out-of-source building are usually used with CMake. 
-That is, we create a separate fold named build/release/debug/etc. 
-and put all built files in it.
+In the following, we assume out-of-source building (similar to VPATH builds to GNU Automake). 
+It helps us keep a clean source tree.
+And when something gets messed up, you can simply remove the whole build tree.
 
 ```bash
 mkdir build
 cd build
-cmake ..  # this will generate a set of folders and a build script (e.g., makefile)
+cmake ..  # this will generate a set of folders and a build script (e.g., Makefile)
 make      # build
 # Alternatives:
-cmake -DCMAKE_BUILD_TYPE=debug ..
-cmake -DCMAKE_BUILD_TYPE=relase -Dtest=OFF ..
-VERBOSE=1 make
+cmake -DCMAKE_BUILD_TYPE=relase ..
+make VERBOSE=1
 # Set compiler version:
 CC=gcc-4.9 CXX=g++-4.9 cmake ..
 ```
 
 `project_root/src/CMakeLists.txt`
 ---
-The `src` directory contains a bunch of **class definitions**.
+The `src` directory contains a bunch of **source files**.
 I compile these classes into object files and group them as a (static) library.
 
 ```cmake
