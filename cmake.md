@@ -1,14 +1,21 @@
 # CMake
 
-CMake is a tool to generate build scripts.
-A *build script* helps you compile and link your project codes automatically 
-(for example, a *Makefile* is a build script).
-CMake helps you generate such build scripts.
-The original purpose of CMake is to be platform independent.
-For example, the same CMake file can generate scripts for GNU make, clang and MSVC.
+## What is CMake ?
 
-There is a growing population of IDEs supporting CMake.
-E.g., KDevelop and CLion.
+CMake is a tool used to generate *build scripts* (of course, along with a couple of other features).
+
+## What is a build script?
+
+A *build script* helps you compile, link and install your project.
+For example, a *Makefile* is a commonly used kind of build script.
+
+## Advantages of CMake
+
++ **It's platform independent**. For example, while MSVC uses slashes for options (/O2), GCC uses dashes (-O2). CMake takes care of such issues for you.
++ **It has a consistent and easy-to-comprehend syntax**. You only have to master one set of syntax of CMake, and the syntax is highly readable and self-explanatory like `target_link_libraries(tg lib1 lib2 ...)`. In older build systems such as GNU Autotools, users need to master different syntax for Autoconf and Automake, and possibly along with some knowledge about M4 macro. The syntax also appears to be clumsy sometimes.
++ **Growing IDE supporting**. Eclipse, KDevelop and CLion are on a growing path of supporting CMake.
+
+## CMake in a typical project
 
 Basically, there should be a `CMakeLists.txt` file (don't miss the **s** in the file name) 
 in your project's root directory.
