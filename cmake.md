@@ -114,38 +114,42 @@ make VERBOSE=1
 CC=gcc-4.9 CXX=g++-4.9 cmake ..
 ```
 
-`project_root/src/CMakeLists.txt`
----
-The `src` directory contains a bunch of **source files**.
+### `project_root/src/CMakeLists.txt`
+
+The `src/` directory contains a bunch of **source files**.
 I compile these classes into object files and group them as a (static) library.
 
 ```cmake
-# foo_src is a list of *.cpp files in the this directory
-file(GLOB foo_src RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
-# CMake will compile them into a library libfoo.a
-add_library(foo STATIC ${foo_src})
+# Define a list 'demo_sources' for the source files of the library 'demo'
+# It's not necessary to name it 'xxx_sources'.
+# But doing so may be comfortable for those who move from GNU Autotools.
+list(APPEND demo_sources
+        a.cpp
+        b.cpp
+        c.cpp
+    )
+
+add_library(demo STATIC ${demo_sources})
 ```
 
-`project_root/experiment/CMakeLists.txt`
----
-The `experiment` directory contains a set of experiment programs.
-Each \*.cpp file contains a `main` function and each file is compiled into an **executable**.
+### `project_root/experiment/CMakeLists.txt`
+
+The `experiment/` directory contains a set of experiment programs.
+Each .cpp file contains a `main` function and each file is compiled into an **executable**.
 
 ```cmake
-# My experiments need to use another library called pcm
-# In this example, pcm is obtained as a pre-compiled library (*.a)
-include_directories("${CMAKE_SOURCE_DIR}/pcm" "${CMAKE_CURRENT_SOURCE_DIR}")
-file(GLOB experiment_src RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
-# Add an executable for each *.cpp file
-foreach(srcfile ${experiment_src})
-    string(REPLACE ".cpp" "" exp ${srcfile})
-    add_executable(${exp} ${srcfile})
-#   Linking my classes definition and pcm
-    target_link_libraries(${exp} foo ${CMAKE_SOURCE_DIR}/pcm/pcm-lib.a)
+list(APPEND experiments
+    expm1
+    expm2
+    )
+
+foreach(ee ${experiments})
+    add_executable(${ee} "${ee}.cpp")
+    target_link_libraries(${ee} demo)
 endforeach()
 ```
 
-## Using Google Test
+### Using Google Test
 
 GoogleTest comes along with its own CMake file that builds its own library.
 My approach: simply copy the whole GoogleTest folder into your project directory,
@@ -153,9 +157,10 @@ then make it a sub-directory of your project. (A quick intro of GoogleTest: http
 
 Notice the line `add_subdirectory(gtest-1.7.0)` in the root CMake file above.
 
-`project_root/test/CMakeLists.txt`
----
-The `test` folder contains a set of test cases that uses the GoogleTest framework.
+
+### `project_root/tests/CMakeLists.txt`
+
+The `tests/` folder contains a set of test cases that uses the GoogleTest framework.
 
 ```cmake
 # Remember to include the GoogleTest's headers
@@ -163,19 +168,14 @@ The `test` folder contains a set of test cases that uses the GoogleTest framewor
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 list(APPEND test_list
-        avx-utility_test
-        bitvector_block_test
-        bitvector_iterator_test
-        bitvector_test
-        byteslice_column_block_test
-        column_test
+        test1
+        test2
     )
 
-# For each test file, add it to an executable and add it to dependencies of 'check-build'
 foreach(tt ${test_list})
     add_executable(${tt}  "${tt}.cpp")
-    target_link_libraries(${tt} byteslice-core gtest gtest_main)
-    add_test(NAME ${tt} COMMAND ${tt} --gtest_color=yes)
+    target_link_libraries(${tt} demo gtest gtest_main)
+    add_test(NAME ${tt} COMMAND ${tt} --gtest_color=yes)    # you may append other gtest options here
     add_dependencies(check-build ${tt})
 endforeach()
 ```
