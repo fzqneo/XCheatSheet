@@ -63,3 +63,7 @@ valgrind --leak-check=yes  --read-var-info=yes ./myapp
 For memory leak, it shows where the leaked memory is allocated. For illegal access, it may report if the accessed address is near some legal address space.
 
 The ` --read-var-info ` option can provide more detailed information about illegal access location.
+
+```bash
+valgrind --tool=memcheck --leak-check=yes --track-origins=yes --trace-children=yes --db-attach=yes --log-file="valgrind.log" pg_ctl -D ./data start 
+```
