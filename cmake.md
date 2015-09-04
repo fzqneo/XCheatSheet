@@ -12,7 +12,7 @@ For example, a *Makefile* is a commonly used kind of build script.
 ## Advantages of CMake
 
 + **It's platform independent**. For example, while MSVC uses slashes for options (/O2), GCC uses dashes (-O2). CMake takes care of such issues for you.
-+ **It has a consistent and easy-to-comprehend syntax**. You only have to master one set of syntax of CMake, and the syntax is highly readable and self-explanatory like `target_link_libraries(tg lib1 lib2 ...)`. In older build systems such as GNU Autotools, users need to master different syntax for Autoconf and Automake, and possibly along with some knowledge about M4 macro. The syntax also appears to be clumsy sometimes.
++ **It has a consistent and easy-to-comprehend syntax**. You only have to master one set of syntax of CMake, and the syntax is highly readable and self-explanatory like `target_link_libraries(tg lib1 lib2 ...)`. In older build systems such as GNU Autotools, users need to master different syntax for Autoconf and Automake, and possibly along with some knowledge about M4 macro. That syntax also appears to be clumsy sometimes. **A build system should make your life easier, not more complicated.**
 + **Growing IDE supporting**. Eclipse, KDevelop and CLion are on a growing path of supporting CMake.
 
 ## CMake in a typical project
