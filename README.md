@@ -11,8 +11,8 @@ But I will be glad if you find them helpful.
 
 Also, you are welcome to tell me if you :
 + find a bug in the files;
-+ think I do something in a typically wrong way;
-+ would like to suggest a better approach for some issue.
++ think I do something in a typically wrong/flawy/inefficient way;
++ would like to suggest a better approach for some task.
 
 I will be grateful for such opinions and suggestions.
 
