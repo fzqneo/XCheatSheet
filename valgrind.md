@@ -4,16 +4,24 @@
 
 **memcheck** is the default tool used by Valgrind. It is intended to idendify memory related problems, which mainly include:
 
-+ Memory leak (e.g., `new` without `free`)
-+ Illegal access (e.g., "one past the end" access)
++ Memory leak (e.g., `malloc` without `free`, `new` without `delete`, etc.)
++ Illegal access (e.g., "one past the end" access, dangling pointer access)
++ Usage of Uninitialized memory (cause of plenty of mysterious bugs ...)
 
 ```bash
 valgrind --leak-check=yes  --read-var-info=yes ./myapp
 ```
 
-For memory leak, it shows where the leaked memory is allocated. For illegal access, it may report if the accessed address is near some legal address space.
+For memory problems, Valgrind will typically show:
 
-The ` --read-var-info ` option can provide more detailed information about illegal access location.
+1. Where the illegal access happens (which line of code)
+2. Where it is allocated (if any)
+3. Where it is free'd (if any)
+
+Options:
+
+1. ` --read-var-info=yes`: provide more detailed information about illegal access location.
+2. `--leak-check=yes`: check for memory leaks
 
 ### Use case: debugging Postgres
 
@@ -24,6 +32,12 @@ When debugging, I want to debug all spawned processes by the master.
 valgrind --tool=memcheck --leak-check=yes --track-origins=yes --trace-children=yes --db-attach=yes --log-file="valgrind.log" pg_ctl -D ./data start 
 ```
 
+Options:
+
+1. `-tool=memcheck`: default, can be omitted
+2. `--track-origins=yes`: show the sources of uninitialised data
+3. `-trace-children=yes`: monitor all spawned child processes as well (NB: this is for **multi-process**, not **multi-thread**. Multi-thread is monitored automatically.)
+4. `--db-attach=yes`: attach to **gdb** when error occurs
 
 
 ##Callgrind
@@ -69,10 +83,5 @@ On the command line, start profiling with
 kcachegrind callgrind.out.4990
 ```
 
-###Invoke debugger when error occurs
-```
-valgrind --db-attach=yes ./myapp
-```
-This will launch **gdb** when valgrind encounters an error.
 
 
