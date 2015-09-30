@@ -23,6 +23,13 @@ Each monetdb demon is associated with a **dbfarm**. Only one instance of *monetd
 
 **No** support for `use database` command **within** a client session.
 
++ If you are lazy, put the username and password in a file:
+```bash
+$ cat .monetdb
+user=monetdb
+password=monetdb
+```
+
 + Timing: `mclient -ims -u monetdb -d tpch`
 
 `ms` can also be `s` or `m`. It will report execution time of a qeury.
