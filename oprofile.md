@@ -29,5 +29,5 @@ If callgraph is collected, it can be reported with `opreport ---callgraph`.
 ##*opannotate* --- annotating source file
 ```bash
 opannotate --source --assembly
-opannotate --srouce --output-dir=annotated
+opannotate --source --output-dir=annotated
 ```
