@@ -12,6 +12,8 @@
 valgrind --leak-check=yes  --read-var-info=yes ./myapp
 ```
 
+**You should compile your program with debug information** (e.g., `gcc -g`).
+
 For memory problems, Valgrind will typically show:
 
 1. Where the illegal access happens (which line of code)
@@ -20,12 +22,12 @@ For memory problems, Valgrind will typically show:
 
 Options:
 
-1. ` --read-var-info=yes`: provide more detailed information about illegal access location.
+1. `--read-var-info=yes`: provide more detailed information about illegal access location.
 2. `--leak-check=yes`: check for memory leaks
 
 ### Use case: debugging Postgres
 
-*Postgres* is a DMBS that uses a multi-process model for parallel execution. 
+*PostgreSQL* is a DMBS that uses a multi-process model for parallel execution. 
 When debugging, I want to debug all spawned processes by the master.
 
 ```bash
@@ -34,9 +36,9 @@ valgrind --tool=memcheck --leak-check=yes --track-origins=yes --trace-children=y
 
 Options:
 
-1. `-tool=memcheck`: default, can be omitted
+1. `--tool=memcheck`: default, can be omitted
 2. `--track-origins=yes`: show the sources of uninitialised data
-3. `-trace-children=yes`: monitor all spawned child processes as well (NB: this is for **multi-process**, not **multi-thread**. Multi-thread is monitored automatically.)
+3. `--trace-children=yes`: monitor all spawned child processes as well (NB: this is for **multi-process**, not **multi-thread**. Multi-thread is monitored automatically. However, the parallel behavior under Valgrind may be different from reality. So synchronization problem may not show.)
 4. `--db-attach=yes`: attach to **gdb** when error occurs
 
 
