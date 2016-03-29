@@ -12,6 +12,7 @@ Each monetdb demon is associated with a **dbfarm**. Only one instance of *monetd
 4. Shutdown: `monetdbd stop ~/my-dbfarm`
 
 ## monetdb
+Reference: [monetdb man-page](https://www.monetdb.org/Documentation/monetdb-man-page)
 
 1. Create a new database: `monetdb create tpch`
 1. A newly-created DB is in *locked* state. Need to release it for use: `monetdb release tpch`
@@ -33,6 +34,13 @@ $ cat .monetdb
 user=monetdb
 password=monetdb
 ```
+
+Useful options:
+
++ **-l {sql|mal}**: Use SQL or MAL as query language
++ **-i [ms|s|m]**: Specfify time measurement precision
++ **-f {sql|csv|raw|X|tab|xml}**: Specify display format of query result
++ **-s stmt**: Provide query statement from shell command
 
 ### Backslash commands
 
