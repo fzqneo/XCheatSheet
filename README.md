@@ -4,8 +4,8 @@ XCheatSheet
 I do research in main memory data processing systems.
 I mostly write C++ under Linux environments.
 
-This repo contains a bunch of files I use as my own handy cheatsheet.
-By no means they are intended to be tutorials or manuals.
+The purpose of this repo is nothing more than a personal handy cheatsheet.
+By no means it is intended to be tutorials or manuals.
 There is no warranty for the correctness of these files.
 But I will be glad if you find them helpful.
 
