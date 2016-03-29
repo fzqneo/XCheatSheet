@@ -14,8 +14,10 @@ Each monetdb demon is associated with a **dbfarm**. Only one instance of *monetd
 ## monetdb
 
 1. Create a new database: `monetdb create tpch`
-2. A newly-created DB is in *locked* state. Need to release it for use: `monetdb release tpch`
-3. Show status of all databases in the dbfarm: `monetdb status`
+1. A newly-created DB is in *locked* state. Need to release it for use: `monetdb release tpch`
+1. Show status of all databases in the dbfarm: `monetdb status`
+1. Display properties of a database: `monetdb get all tpch`
+2. Set database to use single-thread: `monetdb stop tpch && monetdb set nthreads=1 tpch`
 
 ## mclient
 Reference: [mclient man-page](https://www.monetdb.org/Documentation/mclient-man-page)
@@ -40,7 +42,8 @@ Purpose        | PostgreSql    | MonetDB
 Change DB      | \c tpch     | no way
 List all DB    | \l          | no way
 Describe table | \d [tpch]   | \d [tpch]
-Execute script | \i file.sql | \\\< file.sql
+Run from file  | \i file.sql | \\\< file.sql
+Write to file  |             | \\\> file.txt
 Quit           | \q          | \q
 Help           |             | \?
 
