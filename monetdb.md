@@ -42,6 +42,11 @@ Useful options:
 + **-f {sql|csv|raw|X|tab|xml}**: Specify display format of query result
 + **-s stmt**: Provide query statement from shell command
 
+**Running a SQL file from command line**:
+
+``mclient -d tpch Q1.sql``
+
+
 ### Backslash commands
 
 
@@ -55,8 +60,6 @@ Write to file  |             | \\\> file.txt
 Quit           | \q          | \q
 Help           |             | \?
 
-
-## mclient examples
 
 ### Load a table from csv
 
@@ -80,3 +83,14 @@ mclient -d $db -s "COPY INTO $table FROM STDIN USING DELIMITERS ’,’,’\\n�
 COPY (select encode_date(l_shipdate) from "sys"."lineitem") INTO '/tmp/lineitem.l_shipdate.txt' NULL AS '0';
 ```
 Notice: file path must be **absolute path**.
+
+## Profiling queries
+
+Trace profile in MonetDB gives MAL-level statistics.
+
++ TRACE command in SQL interface
++ Stethoscope - Proper for online monitoring
++ Tachograph - Proper for offline analysis. It generates three different formats: .trace, .csv and .json. 
+    - ".trace" is same as TRACE SQL output
+    - ".csv" is good for loading and parsing. 
+    - ".json" contain a useful *beautystmt* attribute that gives MAL instructions more readable interpretations.
