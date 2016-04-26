@@ -78,6 +78,8 @@ mclient -d $db -s "COPY INTO $table FROM ’$file’ USING DELIMITERS ’,’,�
 mclient -d $db -s "COPY INTO $table FROM STDIN USING DELIMITERS ’,’,’\\n’,’\"’" - < $file
 ```
 
+For more details: https://www.monetdb.org/Documentation/Manuals/SQLreference/CopyInto
+
 ### Export a table/query result to csv
 ```sql
 COPY (select encode_date(l_shipdate) from "sys"."lineitem") INTO '/tmp/lineitem.l_shipdate.txt' NULL AS '0';
