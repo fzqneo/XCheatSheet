@@ -40,7 +40,7 @@ Effect: Nothing fancy. It's SSH.
 
 ## Q&A
 
-1. Q: Where to git? A: *Local. It's the primary copy and you have IDE support.*
+1. Q: Where to git? A: *Local. It's the primary copy and you have IDE git plugin.*
 
 ## To-Do
 
