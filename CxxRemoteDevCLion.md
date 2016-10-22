@@ -19,12 +19,12 @@ so I can enjoy the IDE features.
 
 ## Solution
 
-Summary: **Sync source files via Remote Host Access (Deployment), run programs via Terminal+SSH**.
+Summary: **Sync source files via Remote Host Access (Deployment). Run programs via Terminal+SSH**.
 
 ### Set up SFTP and auto sync
 
 1. Preferences -> Deployment -> Add -> Fill in SFTP crediential (host, username, password, home directory)
-2. Switch to "Mapping" tab -> Filling local and remote path
+2. Switch to "Mapping" tab -> Filling local and remote path (Your files will be uploaded to the remote path)
 3. "OK"
 4. Tools -> Deployment -> Automatic Upload
 
@@ -40,7 +40,7 @@ Effect: Nothing fancy. It's SSH.
 
 ## Q&A
 
-1. - Where to git? - *Local. It's the primary copy and you have IDE support.*
+1. Q: Where to git? A: *Local. It's the primary copy and you have IDE support.*
 
 ## To-Do
 
